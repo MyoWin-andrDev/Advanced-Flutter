@@ -1,7 +1,7 @@
 import 'package:advanced_flutter/provider/count_provider.dart';
+import 'package:advanced_flutter/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../utils/counting.dart';
 import 'about.dart';
 
@@ -14,10 +14,29 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var number = Counting.value;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Home Page"),
+          backgroundColor: Colors.amberAccent,
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Toggle brightness
+                final themeProvider = context.read<ThemeProvider>();
+                themeProvider.setBrightness(
+                  themeProvider.brightness == Brightness.light
+                      ? Brightness.dark
+                      : Brightness.light,
+                );
+              },
+              icon: Icon(Icons.settings),
+            ),
+          ],
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,10 +52,11 @@ class _HomeState extends State<Home> {
                 child: Text("Increase"),
               ),
               TextButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => About()));
-                  },
-                  child: Text("Go To About")),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => About()));
+                },
+                child: Text("Go To About"),
+              ),
             ],
           ),
         ),
