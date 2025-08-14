@@ -1,7 +1,11 @@
+import 'package:advanced_flutter/provider/count_provider.dart';
 import 'package:advanced_flutter/ui/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../data/counting.dart';
+import '../utils/counting.dart';
+
+
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -18,13 +22,15 @@ class _AboutState extends State<About> {
       child: Scaffold(
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Counter is $number"),
+              Text("Counter is ${context.watch<CountProvider>().count}"),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  number++;
-                  setState(() {});
+                  setState(() {
+                    context.read<CountProvider>().increaseCount();
+                  });
                 },
                 child: Text("Increase"),
               ),
